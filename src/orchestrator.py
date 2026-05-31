@@ -27,7 +27,7 @@ class Orchestrator:
         number_match: str = r"\d+\.\d+|\d+"
         string_match: str = r"[a-zA-Z]+[\s_][a-zA-Z]+|[a-zA-Z]+"
 
-        input_split: list[str] = split("to|round", command)
+        input_split: list[str] = split(" to | round ", command)
         if len(input_split) > 3 or (len(input_split) > 2 and 'round' not in command):
             raise InvalidNumberOfInputArgumentsError(input_split)
 

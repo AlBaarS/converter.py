@@ -1,5 +1,5 @@
 class InvalidRoundingInputError(Exception):
-    """Exception raised when two units were found of different types
+    """Exception raised when the rounding argument is/contains a string or is a float
 
     Attributes:
         message -- explanation of the error

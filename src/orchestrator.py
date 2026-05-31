@@ -8,6 +8,7 @@ from src.exceptions.no_number_found import NoNumberFoundError
 from src.exceptions.no_unit_found import NoUnitFoundError
 from src.exceptions.incompatible_units import IncompatibleUnitsError
 from src.exceptions.invalid_rounding_input import InvalidRoundingInputError
+from src.exceptions.american_detected import AmericanDetectedError
 
 # Import converters
 from src.converters.area_converter import AreaConverter
@@ -34,6 +35,7 @@ class Orchestrator:
         input_unit_match: Match[str] | None = search(string_match, input_split[0]) # search searches through the whole input string
         output_unit_match: Match[str] | None = search(string_match, input_split[1])
 
+        # Check if the string format is correct
         if input_value_match != None:
             input_value: float = float(input_value_match.group().strip())
         else:
@@ -59,6 +61,12 @@ class Orchestrator:
                 raise InvalidRoundingInputError(input_split[2].strip())
         else:
             decimals: int = -1
+
+        for usa in ["football field", "hamburger", "ford mustang"]:
+            if input_unit == usa:
+                raise AmericanDetectedError(input_unit)
+            elif output_unit == usa:
+                raise AmericanDetectedError(output_unit)
         
         return Input(input_value, input_unit, output_unit, decimals)
     

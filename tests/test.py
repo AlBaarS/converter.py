@@ -17,6 +17,7 @@ from src.exceptions.no_number_found import NoNumberFoundError
 from src.exceptions.no_unit_found import NoUnitFoundError
 from src.exceptions.incompatible_units import IncompatibleUnitsError
 from src.exceptions.invalid_rounding_input import InvalidRoundingInputError
+from src.exceptions.american_detected import AmericanDetectedError
 
 # Import python modules
 import unittest
@@ -114,7 +115,7 @@ class TestOrchestratorClass(unittest.TestCase):
         self.assertRaises(NoUnitFoundError, Orchestrator().orchestrate_conversion, input_command)
 
     def test_if_correctly_formatted_non_existent_unit_results_in_a_NoUnitFoundError(self):
-        input_command: str = "23 football fields to square feet"
+        input_command: str = "23 biscuits to kg"
         self.assertRaises(NoUnitFoundError, Orchestrator().orchestrate_conversion, input_command)
 
     def test_if_non_matching_unit_types_result_in_a_IncompatibleUnitsError(self):
@@ -128,6 +129,10 @@ class TestOrchestratorClass(unittest.TestCase):
     def test_if_float_following_round_results_in_a_InvalidRoundingInputError(self):
         input_command: str = "303 seconds to minutes round 1.3"
         self.assertRaises(InvalidRoundingInputError, Orchestrator().orchestrate_conversion, input_command)
+
+    def test_if_an_American_unit_results_in_an_AmericanDetectedError(self):
+        input_command: str = "23 football fields to square feet"
+        self.assertRaises(AmericanDetectedError, Orchestrator().orchestrate_conversion, input_command)
 
     def test_if_the_first_number_is_selected_when_multiple_are_submitted(self):
         input_command: str = "400 5.3 69 square meters to square decameters"

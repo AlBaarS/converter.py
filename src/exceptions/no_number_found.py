@@ -4,16 +4,17 @@ class NoNumberFoundError(Exception):
     Attributes:
         message -- explanation of the error
     """
+    error_code: int = 1
 
-    message: str = """
-No valid number was found in your input string.
+    def __init__(self, arguments: list[str]):
+        self.message: str = f"""
+No valid number was found in your input: {arguments}.
 Make sure that your input follows the required format: <value><input_unit> to <output_unit>
 Examples:
     convert.py 2.4m to ft
-    convert.py 1.2 l to cup
+    convert.py 1.2 l to cup round 2
     convert.py 40 square meters to square feet
     """
-    error_code: int = 1
   
     def __str__(self):
         return f"{self.message} (Error Code: {self.error_code})"

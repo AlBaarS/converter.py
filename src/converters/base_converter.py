@@ -21,15 +21,21 @@ class BaseConverter:
     
     def list_units(self) -> dict[str, list[str]]:
         return self.units
+    
+    def list_type(self) -> str:
+        return self.type
 
     # Functional methods
     def convert(self, number: float, input_unit: str, output_unit: str) -> float:
         multiplier: float = self.conversion_multipliers[output_unit] / self.conversion_multipliers[input_unit]
         return number * multiplier
     
-    def which_unit(self, symbol: str) -> tuple[str, str]:
+    def which_unit(self, symbol: str) -> dict[str, str]:
         found_unit: str = ""
-        for unit, symbol_list in self.units.items():
+        for unit, symbol_list in self.list_units().items():
             if symbol in symbol_list:
                 found_unit: str = unit
-        return (found_unit, self.type)
+        return {
+            "unit": found_unit,
+            "type": self.list_type()
+        }

@@ -35,7 +35,7 @@ class DistanceConverter(BaseConverter):
         "yard":          ["yd","yard"],
         "mile":          ["mi","mile"],
         "nautical_mile": ["nmi","nautical mile","nautical_mile"],
-        "lightyear":     ["ly","light year","light_year","light-year"]
+        "lightyear":     ["ly","lightyear", "light year","light_year","light-year"]
     }
 
     type: str = "distance"

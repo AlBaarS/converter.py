@@ -22,12 +22,12 @@ class TimeConverter(BaseConverter):
         "microsecond": ["µs","us","microsecond"],
         "millisecond": ["ms","millisecond"],
         "second":      ["s","sec","second"],
-        "minute":      ["mn","min","minute"],
+        "minute":      ["min","mn","minute"],
         "hour":        ["hr","hour"],
-        "day":         ["dy","day"],
-        "week":        ["wk","week"],
+        "day":         ["d","dy","day"],
+        "week":        ["w","wk","week"],
         "month":       ["mo","month"],
-        "year":        ["yr","year"]
+        "year":        ["y","yr","year","a"]
     }
 
     type: str = "time"

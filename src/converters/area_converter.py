@@ -32,7 +32,7 @@ class AreaConverter(BaseConverter):
         "square_inch":       ["in²","in2","in^2","sqin","sq_in","square inch","square_inch"],
         "square_foot":       ["ft²","ft2","ft^2","sqft","sq_ft","square foot","square_foot"],
         "square_yard":       ["yd²","yd2","yd^2","sqyd","sq_yd","square yard","square_yard"],
-        "acre":              ["acre","ac"],
+        "acre":              ["ac","acre"],
         "square_mile":       ["mi²","mi2","mi^2","sqmi","sq_mi","square mile","square_mile"]
     }
 

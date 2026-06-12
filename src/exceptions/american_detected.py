@@ -6,11 +6,11 @@ class AmericanDetectedError(Exception):
     """
     error_code: int = 1
 
-    def __init__(self, arguments: str):
+    def __init__(self, arguments: str) -> None:
         self.message: str = f"""
 No valid unit string was found in your input: {arguments}.
 This converter only uses real and freedom units, as recognized by ISO
     """
-  
-    def __str__(self):
+
+    def __str__(self) -> str:
         return f"{self.message} (Error Code: {self.error_code})"

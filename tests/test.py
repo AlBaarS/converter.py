@@ -8,8 +8,11 @@ from src.converters.time_converter import TimeConverter
 from src.converters.volume_converter import VolumeConverter
 from src.converters.weight_converter import WeightConverter
 
-# Import converter class
+# Import orchestrator class
 from src.orchestrator import Orchestrator
+
+# Import input class
+from src.input.input import Input
 
 # Import exceptions
 from src.exceptions.invalid_number_of_input_items import InvalidNumberOfInputArgumentsError
@@ -72,39 +75,93 @@ class TestConverterObjects(unittest.TestCase):
                         all_units.append(unit)
         self.assertEqual(duplicates, [])
 
-class TestOrchestratorClass(unittest.TestCase):
-    
-    def test_if_conversion_works(self):
-        input_data: str = "2 metre to centimetre"
-        output_expect: str = "200 centimeters (cm)"
-        output_test: str = Orchestrator().orchestrate_conversion(input_data)
-        self.assertEqual(output_expect, output_test)
-    
-    def test_if_the_resulting_unit_is_singular_if_the_answer_is_precisely_1(self):
-        input_data: str = "100 cm to m"
-        output_expect: str = "1 meter (m)"
-        output_test: str = Orchestrator().orchestrate_conversion(input_data)
-        self.assertEqual(output_expect, output_test)
+class TestInputClass(unittest.TestCase):
 
-    def test_if_the_output_is_rounded_correctly(self):
-        input_data: str = "1 metre to yard round 3"
-        output_expect: str = "1.094 yards (yd)"
-        output_test: str = Orchestrator().orchestrate_conversion(input_data)
-        self.assertEqual(output_expect, output_test)
+    def test_input_initialization(self):
+        input_command: str = "2 metre to centimetre"
+        output_input_value_expect: float = 2
+        output_raw_input_unit_expect: str = "metre"
+        output_raw_output_unit_expect: str = "centimetre"
+        output_decimals_expect: int = -1
+        output_numeric_output_expect: bool = False
+        output_test: Input = Input(input_command)
+        self.assertEqual(output_test.input_value, output_input_value_expect)
+        self.assertEqual(output_test.raw_input_unit, output_raw_input_unit_expect)
+        self.assertEqual(output_test.raw_output_unit, output_raw_output_unit_expect)
+        self.assertEqual(output_test.decimals, output_decimals_expect)
+        self.assertEqual(output_test.numeric_output, output_numeric_output_expect)
 
-    def test_if_units_ending_in_s_are_correctly_detected(self):
-        input_data: str = "2 cups to quarts round 1"
-        output_expect: str = "0.5 quarts (qt)"
-        output_test: str = Orchestrator().orchestrate_conversion(input_data)
-        self.assertEqual(output_expect, output_test)
-    
+    def test_if_round_integer_is_correctly_detected(self):
+        input_command: str = "303 seconds to minutes round 2"
+        output_decimals_expect: int = 2
+        output_test: Input = Input(input_command)
+        self.assertEqual(output_test.decimals, output_decimals_expect)
+
+    def test_if_string_following_round_results_in_a_InvalidRoundingInputError(self):
+        input_command: str = "303 seconds to minutes round down"
+        self.assertRaises(InvalidRoundingInputError, Input, input_command)
+
+    def test_if_float_following_round_results_in_a_InvalidRoundingInputError(self):
+        input_command: str = "303 seconds to minutes round 1.3"
+        self.assertRaises(InvalidRoundingInputError, Input, input_command)
+
+    def test_if_unitless_detection_works(self):
+        input_command: str = "450 grams to kilograms unitless"
+        output_numeric_output_expect: bool = True
+        output_test: Input = Input(input_command)
+        self.assertEqual(output_test.numeric_output, output_numeric_output_expect)
+
     def test_if_multiple_to_results_in_InvaludNumberOfInputArgumentsError(self):
         input_command: str = "20m to be or not to be that is the question"
-        self.assertRaises(InvalidNumberOfInputArgumentsError, Orchestrator().orchestrate_conversion, input_command)
+        self.assertRaises(InvalidNumberOfInputArgumentsError, Input, input_command)
 
     def test_if_a_string_at_the_start_results_in_a_NoNumberFoundError(self):
         input_command: str = "please convert 40 square meters to square feet"
-        self.assertRaises(NoNumberFoundError, Orchestrator().orchestrate_conversion, input_command)
+        self.assertRaises(NoNumberFoundError, Input, input_command)
+
+    def test_if_an_American_unit_results_in_an_AmericanDetectedError(self):
+        input_command: str = "23 football fields to square feet"
+        self.assertRaises(AmericanDetectedError, Input, input_command)
+
+    def test_if_the_first_number_is_selected_when_multiple_are_submitted(self):
+        input_command: str = "400 5.3 69 square meters to square decameters"
+        output_input_value_expect: float = 400
+        output_test: Input = Input(input_command)
+        self.assertEqual(output_test.input_value, output_input_value_expect)
+
+    def test_if_multiple_strings_as_unit_are_handled_correctly(self):
+        input_command: str = "400 square meters bilbo baggins to square decameters"
+        output_raw_input_unit_expect: str = "square meter"
+        output_raw_output_unit_expect: str = "square decameter"
+        output_test: Input = Input(input_command)
+        self.assertEqual(output_test.raw_input_unit, output_raw_input_unit_expect)
+        self.assertEqual(output_test.raw_output_unit, output_raw_output_unit_expect)
+
+class TestOrchestratorClass(unittest.TestCase):
+    
+    def test_if_conversion_works(self):
+        input_command: str = "2 metre to centimetre"
+        output_expect: str = "200 centimeters (cm)"
+        output_test: str = Orchestrator().orchestrate_conversion(input_command)
+        self.assertEqual(output_expect, output_test)
+    
+    def test_if_the_resulting_unit_is_singular_if_the_answer_is_precisely_1(self):
+        input_command: str = "100 cm to m"
+        output_expect: str = "1 meter (m)"
+        output_test: str = Orchestrator().orchestrate_conversion(input_command)
+        self.assertEqual(output_expect, output_test)
+
+    def test_if_the_output_is_rounded_correctly(self):
+        input_command: str = "1 metre to yard round 3"
+        output_expect: str = "1.094 yards (yd)"
+        output_test: str = Orchestrator().orchestrate_conversion(input_command)
+        self.assertEqual(output_expect, output_test)
+
+    def test_if_units_ending_in_s_are_correctly_detected(self):
+        input_command: str = "2 cups to quarts round 1"
+        output_expect: str = "0.5 quarts (qt)"
+        output_test: str = Orchestrator().orchestrate_conversion(input_command)
+        self.assertEqual(output_expect, output_test)
 
     def test_if_giberrish_input_unit_results_in_a_NoUnitFoundError(self):
         input_command: str = "23ef2t43fe to square feet"
@@ -122,27 +179,9 @@ class TestOrchestratorClass(unittest.TestCase):
         input_command: str = "30 seconds to lightyears"
         self.assertRaises(IncompatibleUnitsError, Orchestrator().orchestrate_conversion, input_command)
 
-    def test_if_string_following_round_results_in_a_InvalidRoundingInputError(self):
-        input_command: str = "303 seconds to minutes round down"
-        self.assertRaises(InvalidRoundingInputError, Orchestrator().orchestrate_conversion, input_command)
-
-    def test_if_float_following_round_results_in_a_InvalidRoundingInputError(self):
-        input_command: str = "303 seconds to minutes round 1.3"
-        self.assertRaises(InvalidRoundingInputError, Orchestrator().orchestrate_conversion, input_command)
-
-    def test_if_an_American_unit_results_in_an_AmericanDetectedError(self):
-        input_command: str = "23 football fields to square feet"
-        self.assertRaises(AmericanDetectedError, Orchestrator().orchestrate_conversion, input_command)
-
-    def test_if_the_first_number_is_selected_when_multiple_are_submitted(self):
-        input_command: str = "400 5.3 69 square meters to square decameters"
-        output_expect: str = "4 square decameters (dam²)"
-        output_test: str = Orchestrator().orchestrate_conversion(input_command)
-        self.assertEqual(output_expect, output_test)
-
-    def test_if_multiple_strings_as_unit_are_handled_correctly(self):
-        input_command: str = "400 square meters bilbo baggins to square decameters"
-        output_expect: str = "4 square decameters (dam²)"
+    def test_if_unitless_output_works(self):
+        input_command: str = "2000g to kg unitless"
+        output_expect: str = "2"
         output_test: str = Orchestrator().orchestrate_conversion(input_command)
         self.assertEqual(output_expect, output_test)
 

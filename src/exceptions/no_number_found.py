@@ -16,5 +16,5 @@ Examples:
     convert.py 40 square meters to square feet
     """
 
-    def __str__(self) -> str:
+    def __str__(self) -> str:   # pragma: no cover
         return f"{self.message} (Error Code: {self.error_code})"

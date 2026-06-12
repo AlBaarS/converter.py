@@ -13,27 +13,43 @@ class Input():
     raw_input_unit: str
     raw_output_unit: str
     decimals: int = -1
-    numeric_output: bool = False
+    unitless_output: bool = False
 
     # Builder methods
     def __init__(self, command: str) -> None:
-        self.input_value = self.__get_input_value(command)
-        self.raw_input_unit = self.__get_raw_unit(command, "input")
-        self.raw_output_unit = self.__get_raw_unit(command, "output")
-        self.decimals = self.__get_decimals(command)
-        self.numeric_output = self.__determine_output_type(command)
-            
-    def __str__(self) -> str:
+        self.input_value = self.__filter_input_value(command)
+        self.raw_input_unit = self.__filter_raw_unit(command, "input")
+        self.raw_output_unit = self.__filter_raw_unit(command, "output")
+        self.decimals = self.__filter_decimals(command)
+        self.unitless_output = self.__determine_output_type(command)
+
+    # Printing methods
+    def __str__(self) -> str:   # pragma: no cover
         return(
             "input_value: " + str(self.input_value) + "\n" +
             "raw_input_unit: " + self.raw_input_unit + "\n" +
             "raw_output_unit: " + self.raw_output_unit + "\n" +
             "decimals: " + str(self.decimals) + "\n" +
-            "numeric_output: " + str(self.numeric_output)
+            "unitless_output: " + str(self.unitless_output)
         )
     
+    def get_input_value(self) -> float:    # pragma: no cover
+        return self.input_value
+    
+    def get_raw_input_unit(self) -> str:   # pragma: no cover
+        return self.raw_input_unit
+    
+    def get_raw_output_unit(self) -> str:  # pragma: no cover
+        return self.raw_output_unit
+    
+    def get_decimals(self) -> int:         # pragma: no cover
+        return self.decimals
+    
+    def get_unitless_output(self) -> bool: # pragma: no cover
+        return self.unitless_output
+    
     # Input filtering methods
-    def __get_input_value(self, command: str) -> float:
+    def __filter_input_value(self, command: str) -> float:
         number_match: str = r"\d+\.\d+|\d+"
         input_value_match: Match[str] | None = match(number_match, command)
         if input_value_match != None:
@@ -41,7 +57,7 @@ class Input():
         else:
             raise NoNumberFoundError(command)
 
-    def __get_raw_unit(self, command: str, in_or_out: str) -> str:
+    def __filter_raw_unit(self, command: str, in_or_out: str) -> str:
         string_match: str = r"[a-zA-Z]+[\s_][a-zA-Z]+|[a-zA-Z]+"
         command_split: list[str] = split(" to ", sub(r" round \d{1,3}| unitless","",command))
 
@@ -67,7 +83,7 @@ class Input():
             
         return raw_unit
 
-    def __get_decimals(self, command: str) -> int:
+    def __filter_decimals(self, command: str) -> int:
         if "round" in command:
             command_split: list[str] = split(" ", command)
 

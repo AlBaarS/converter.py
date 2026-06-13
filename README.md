@@ -1,3 +1,4 @@
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 # converter.py
 
 Hobby project to create a converter tool on the command line. Works on Linux, will probably work on Unix/MacOS, might work on Windows (cannot test this myself).

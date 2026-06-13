@@ -4,6 +4,7 @@ class NoNumberFoundError(Exception):
     Attributes:
         message -- explanation of the error
     """
+
     error_code: int = 1
 
     def __init__(self, arguments: list[str] | str) -> None:
@@ -16,5 +17,5 @@ Examples:
     convert.py 40 square meters to square feet
     """
 
-    def __str__(self) -> str:   # pragma: no cover
+    def __str__(self) -> str:  # pragma: no cover
         return f"{self.message} (Error Code: {self.error_code})"

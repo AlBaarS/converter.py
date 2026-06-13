@@ -1,0 +1,5 @@
+[tool.black]
+line-length = 120
+target-version = ["py314"]
+required-version = "26"
+include = '\.pyi?$'

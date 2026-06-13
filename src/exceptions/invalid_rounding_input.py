@@ -10,5 +10,5 @@ class InvalidRoundingInputError(Exception):
     def __init__(self, rounding_input: str) -> None:
         self.message: str = f"Given rounding parameter {rounding_input} could not be converted to integer."
 
-    def __str__(self) -> str:   # pragma: no cover
+    def __str__(self) -> str:  # pragma: no cover
         return f"{self.message} (Error Code: {self.error_code})"

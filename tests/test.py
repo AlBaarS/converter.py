@@ -25,6 +25,7 @@ from src.exceptions.american_detected import AmericanDetectedError
 # Import python modules
 import unittest
 
+
 class TestConverterObjects(unittest.TestCase):
 
     def test_doubling(self) -> None:
@@ -60,13 +61,19 @@ class TestConverterObjects(unittest.TestCase):
     def test_if_symbol_that_is_not_present_returns_an_empty_string(self) -> None:
         input_symbol: str = "foo"
         output_expect: str = ""
-        output_test: dict[str, str]  = BaseConverter().which_unit(input_symbol)
+        output_test: dict[str, str] = BaseConverter().which_unit(input_symbol)
         self.assertEqual(output_expect, output_test["unit"])
 
     def test_if_there_are_duplicate_unit_definitions(self) -> None:
         all_units: list[str] = []
         duplicates: list[str] = []
-        for category in [AreaConverter().get_units(), DistanceConverter().get_units(), TimeConverter().get_units(), VolumeConverter().get_units(), WeightConverter().get_units()]:
+        for category in [
+            AreaConverter().get_units(),
+            DistanceConverter().get_units(),
+            TimeConverter().get_units(),
+            VolumeConverter().get_units(),
+            WeightConverter().get_units(),
+        ]:
             for unit_definitions in category.values():
                 for unit in unit_definitions:
                     if unit in all_units:
@@ -74,6 +81,7 @@ class TestConverterObjects(unittest.TestCase):
                     else:
                         all_units.append(unit)
         self.assertEqual(duplicates, [])
+
 
 class TestInputClass(unittest.TestCase):
 
@@ -141,14 +149,15 @@ class TestInputClass(unittest.TestCase):
         self.assertEqual(output_test.get_raw_input_unit(), output_raw_input_unit_expect)
         self.assertEqual(output_test.get_raw_output_unit(), output_raw_output_unit_expect)
 
+
 class TestOrchestratorClass(unittest.TestCase):
-    
+
     def test_if_conversion_works(self) -> None:
         input_command: str = "2 metre to centimetre"
         output_expect: str = "200 centimeters (cm)"
         output_test: str = Orchestrator().orchestrate_conversion(input_command)
         self.assertEqual(output_expect, output_test)
-    
+
     def test_if_the_resulting_unit_is_singular_if_the_answer_is_precisely_1(self) -> None:
         input_command: str = "100 cm to m"
         output_expect: str = "1 meter (m)"
@@ -189,5 +198,6 @@ class TestOrchestratorClass(unittest.TestCase):
         output_test: str = Orchestrator().orchestrate_conversion(input_command)
         self.assertEqual(output_expect, output_test)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

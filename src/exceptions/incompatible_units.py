@@ -10,5 +10,5 @@ class IncompatibleUnitsError(Exception):
     def __init__(self, unittype_1: str, unittype_2: str) -> None:
         self.message: str = f"Trying to convert {unittype_1} to {unittype_2} failed: Incompatible unit types."
 
-    def __str__(self) -> str:   # pragma: no cover
+    def __str__(self) -> str:  # pragma: no cover
         return f"{self.message} (Error Code: {self.error_code})"

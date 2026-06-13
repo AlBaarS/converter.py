@@ -115,6 +115,10 @@ class TestInputClass(unittest.TestCase):
         input_command: str = "20m to be or not to be that is the question"
         self.assertRaises(InvalidNumberOfInputArgumentsError, Input, input_command)
 
+    def test_if_empty_input_results_in_InvaludNumberOfInputArgumentsError(self) -> None:
+        input_command: str = ""
+        self.assertRaises(InvalidNumberOfInputArgumentsError, Input, input_command)
+
     def test_if_a_string_at_the_start_results_in_a_NoNumberFoundError(self) -> None:
         input_command: str = "please convert 40 square meters to square feet"
         self.assertRaises(NoNumberFoundError, Input, input_command)

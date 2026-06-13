@@ -17,9 +17,9 @@ class Input():
 
     # Builder methods
     def __init__(self, command: str) -> None:
-        self.input_value = self.__filter_input_value(command)
         self.raw_input_unit = self.__filter_raw_unit(command, "input")
         self.raw_output_unit = self.__filter_raw_unit(command, "output")
+        self.input_value = self.__filter_input_value(command)
         self.decimals = self.__filter_decimals(command)
         self.unitless_output = self.__determine_output_type(command)
 

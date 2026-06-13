@@ -75,9 +75,9 @@ class Orchestrator:
                 if output_value != 1:
                     output_unit: str = output_unit + 's'
                 if input_data.get_unitless_output():
-                    return str(self.__round(output_value, input_data.get_decimals()))
+                    output: str = str(self.__round(output_value, input_data.get_decimals()))
                 else:
-                    output: str =  f"{str(self.__round(output_value, input_data.get_decimals()))} {output_unit.replace("_", " ")} ({output_symbol})"
+                    output: str = f"{str(self.__round(output_value, input_data.get_decimals()))} {output_unit.replace("_", " ")} ({output_symbol})"
         if output != '':
             return output
         else:

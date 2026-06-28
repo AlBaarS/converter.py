@@ -30,7 +30,7 @@ class AreaConverter(BaseConverter):
         "hectare":           ["ha","hm²","hm2","hm^2","sqhm","sq_hm","square hectometer", "square_hectometer","square hectometre", "square_hectometre"],
         "square_kilometer":  ["km²","km2","km^2","sqkm","sq_km","square kilometer","square_kilometer","square kilometre","square_kilometre"],
         "square_inch":       ["in²","in2","in^2","sqin","sq_in","square inch","square_inch"],
-        "square_foot":       ["ft²","ft2","ft^2","sqft","sq_ft","square foot","square_foot"],
+        "square_foot":       ["ft²","ft2","ft^2","sqft","sq_ft","square foot","square_foot","square feet","square_feet"],
         "square_yard":       ["yd²","yd2","yd^2","sqyd","sq_yd","square yard","square_yard"],
         "acre":              ["ac","acre"],
         "square_mile":       ["mi²","mi2","mi^2","sqmi","sq_mi","square mile","square_mile"]

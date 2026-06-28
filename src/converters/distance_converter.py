@@ -31,7 +31,7 @@ class DistanceConverter(BaseConverter):
         "hectometer":    ["hm","hectometer","hectometre"],
         "kilometer":     ["km","kilometer","kilometre"],
         "inch":          ["in","inch"],
-        "foot":          ["ft","ft.","foot"],
+        "foot":          ["ft","ft.","foot","feet"],
         "yard":          ["yd","yard"],
         "mile":          ["mi","mile"],
         "nautical_mile": ["nmi","nautical mile","nautical_mile"],

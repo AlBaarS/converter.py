@@ -8,22 +8,29 @@ from src.exceptions.no_unit_found import NoUnitFoundError
 from src.exceptions.invalid_rounding_input import InvalidRoundingInputError
 from src.exceptions.american_detected import AmericanDetectedError
 
+# Import Help class
+from src.input.help_page.help_page import Help
+
 class Input():
-    input_value: float
-    raw_input_unit: str
-    raw_output_unit: str
+    input_value: float = 0
+    raw_input_unit: str = ""
+    raw_output_unit: str = ""
     decimals: int = -1
     unitless_output: bool = False
+    help_page: str = ''
 
     # Builder methods
     def __init__(self, command: str) -> None:
-        self.raw_input_unit = self.__filter_raw_unit(command, "input")
-        self.raw_output_unit = self.__filter_raw_unit(command, "output")
-        self.input_value = self.__filter_input_value(command)
-        self.decimals = self.__filter_decimals(command)
-        self.unitless_output = self.__determine_output_type(command)
+        if self.__empty_input_or_help_argument(command):
+            self.help_page = Help(command).page()
+        else:
+            self.input_value = self.__filter_input_value(command)
+            self.raw_input_unit = self.__filter_raw_unit(command, "input")
+            self.raw_output_unit = self.__filter_raw_unit(command, "output")
+            self.decimals = self.__filter_decimals(command)
+            self.unitless_output = self.__determine_output_type(command)
 
-    # Printing methods
+    # Getter methods
     def __str__(self) -> str:   # pragma: no cover
         return(
             "input_value: " + str(self.input_value) + "\n" +
@@ -48,7 +55,21 @@ class Input():
     def get_unitless_output(self) -> bool: # pragma: no cover
         return self.unitless_output
     
+    def get_help_page(self) -> str:        # pragma: no cover
+        return self.help_page
+    
     # Input filtering methods
+    def __empty_input_or_help_argument(self, command: str) -> bool:
+        command_without_whitespace: str = sub(r"\s","",command)
+        if "help" in command_without_whitespace:
+            return True
+        elif type(match(r"\w", command_without_whitespace)) == None:
+            return True
+        elif command_without_whitespace == "":
+            return True
+        else:
+            return False
+
     def __filter_input_value(self, command: str) -> float:
         number_match: str = r"\d+\.\d+|\d+"
         input_value_match: Match[str] | None = match(number_match, command)

@@ -14,6 +14,9 @@ from src.orchestrator import Orchestrator
 # Import input class
 from src.input.input import Input
 
+# Import Help class
+from src.input.help_page.help_page import Help
+
 # Import exceptions
 from src.exceptions.invalid_number_of_input_items import InvalidNumberOfInputArgumentsError
 from src.exceptions.no_number_found import NoNumberFoundError
@@ -75,6 +78,40 @@ class TestConverterObjects(unittest.TestCase):
                         all_units.append(unit)
         self.assertEqual(duplicates, [])
 
+class TestHelpClass(unittest.TestCase):
+
+    def test_if_empty_input_returns_base_help_page(self) -> None:
+        input_command: str = ""
+        self.assertIn("Written in python with love ♥", Help(input_command).page())
+
+    def test_if_help_input_returns_base_help_page(self) -> None:
+        input_command: str = "help"
+        self.assertIn("Written in python with love ♥", Help(input_command).page())
+
+    def test_if_help_area_returns_area_help_page(self) -> None:
+        input_command: str = "help area"
+        self.assertIn("Available units for area:", Help(input_command).page())
+
+    def test_if_help_distance_returns_distance_help_page(self) -> None:
+        input_command: str = "help distance"
+        self.assertIn("Available units for distance:", Help(input_command).page())
+
+    def test_if_help_time_returns_time_help_page(self) -> None:
+        input_command: str = "help time"
+        self.assertIn("Available units for time:", Help(input_command).page())
+
+    def test_if_help_volume_returns_volume_help_page(self) -> None:
+        input_command: str = "help volume"
+        self.assertIn("Available units for volume:", Help(input_command).page())
+
+    def test_if_help_weight_returns_weight_help_page(self) -> None:
+        input_command: str = "help weight"
+        self.assertIn("Available units for weight:", Help(input_command).page())
+
+    def test_if_extra_input_returns_the_base_help_page(self) -> None:
+        input_command: str = "help foo bar 321"
+        self.assertIn("Written in python with love ♥", Help(input_command).page())
+
 class TestInputClass(unittest.TestCase):
 
     def test_input_initialization(self) -> None:
@@ -111,12 +148,20 @@ class TestInputClass(unittest.TestCase):
         output_test: Input = Input(input_command)
         self.assertEqual(output_test.get_unitless_output(), output_unitless_output_expect)
 
-    def test_if_multiple_to_results_in_InvaludNumberOfInputArgumentsError(self) -> None:
-        input_command: str = "20m to be or not to be that is the question"
-        self.assertRaises(InvalidNumberOfInputArgumentsError, Input, input_command)
-
-    def test_if_empty_input_results_in_InvaludNumberOfInputArgumentsError(self) -> None:
+    def test_if_empty_input_results_in_the_base_help_page(self) -> None:
         input_command: str = ""
+        self.assertIn("Written in python with love ♥", Input(input_command).get_help_page())
+
+    def test_if_whitespace_input_results_in_the_base_help_page(self) -> None:
+        input_command: str = " "
+        self.assertIn("Written in python with love ♥", Input(input_command).get_help_page())
+
+    def test_if_help_input_results_in_the_base_help_page(self) -> None:
+        input_command: str = "help"
+        self.assertIn("Written in python with love ♥", Input(input_command).get_help_page())
+
+    def test_if_multiple_to_results_in_InvalidNumberOfInputArgumentsError(self) -> None:
+        input_command: str = "20m to be or not to be that is the question"
         self.assertRaises(InvalidNumberOfInputArgumentsError, Input, input_command)
 
     def test_if_a_string_at_the_start_results_in_a_NoNumberFoundError(self) -> None:

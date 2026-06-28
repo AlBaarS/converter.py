@@ -1,15 +1,19 @@
-# converter.py
+```
+ ▄▄▄▄  ▄▄▄  ▄▄  ▄▄ ▄▄ ▄▄ ▄▄▄▄▄ ▄▄▄▄  ▄▄▄▄▄▄   ▄▄▄▄  ▄▄ ▄▄ 
+██▀▀▀ ██▀██ ███▄██ ██▄██ ██▄▄  ██▄█▄   ██     ██▄█▀ ▀███▀ 
+▀████ ▀███▀ ██ ▀██  ▀█▀  ██▄▄▄ ██ ██   ██   ▄ ██      █   
+```
 
-Hobby project to create a converter tool on the command line. Works on Linux, will probably work on Unix/MacOS, might work on Windows (cannot test this myself).
+A simple command-line tool to convert common units. Supports metric and imperial. Written in python with love ♥
 
 ## What is this tool and why do I need it?
 
-Calm down, sheesh. As stated, this is a hobby project. I am mostly creating it for my enjoyment. However, I do use it during my D&D sessions. If we're playing and I want to know how big the room in which I am going to cast fireball _actually_ is (in real units), I can just type `convert.py 60 ft to m`, and I will have my answer. It saves me opening a tab, typing in the actual search string, and then waiting for duckduckgo to give me the answer. Instead, I get a near-instant result in my terminal. If that sounds neat to you, well, go ahead and download it!
+Calm down, sheesh. As stated, this is a hobby project. I am mostly creating it for my enjoyment. However, I do use it during my D&D sessions. If we're playing and I want to know how long the hallway in which I am going to cast fireball _actually_ is (in real units), I can just type `convert.py 60 ft to m`, and I will have my answer. It saves me opening a tab, typing in the actual search string, and then waiting for duckduckgo to give me the answer. Instead, I get a near-instant result in my terminal. If that sounds neat to you, well, go ahead and download it!
 
 ```
 ❗Please note ❗
-This project uses built-in type hinting and therefore requires at least Python version 3.9
-This project is under development. There are bugs. 
+This project uses match-case statements and therefore requires at least Python version 3.10
+This project is under active development. Here be dragons. And bugs.
 ```
 
 ## Installation
@@ -50,25 +54,65 @@ Now you can call on the converter from any path in your system.
 convert.py 170 lbs to kg
 ```
 
-## Features:
+## Usage:
 
-Convert common units in your terminal of choice using an intuitive syntax:
 
-```bash
-# Use symbols, full name, or common abbreviations. Works with a whitespace or an underscore
-convert.py 3mi to km
-convert.py 20 square meters to square feet
-convert.py 30000 pints to cubic_meters
+### Base syntax
+The syntax is simple and intuitive. Simply type the command, the value, the input unit and the output unit as follows:
+
+```
+convert.py <input value> <input unit> to <output unit> <optional arguments>
 ```
 
-You can also round your output to a specified number of decimals:
+Some examples:
+```
+convert.py 20 pints to liters
+convert.py 3ft to m
+```
+You can use the singular or multitude of a unit (e.g. minute/minutes and foot/feet). Units that consist of two words
+can have a whitespace or an underscore (e.g. square feet and square_feet). It also takes UK English spelling into
+account (e.g. metre and litre). Furthermore, as demonstrated above, you can use the full names and symbols, or the
+approximations thereof (e.g. m², m2 and m^2), and either have a space between the value and the unit or not.
 
-```bash
-convert.py 75 kg to lbs round 2
-convert.py 303 seconds to minutes round 0
+The most important part of the command is the keyword "to". It serves to seperate the input data from the output data,
+and can therefore not be ommited.
+
+### Optional arguments
+Once you run your command, you will receive output as such:
+```
+> convert.py 20 pints to liters
+9.4635249998384 liters (l)
 ```
 
-### Current units supported
+You may want to customize this output. For this purpose, there are two optional arguments:
+
+`round <decimal>`: Specify the number of decimals the output may have. Minimum of 0.
+
+`unitless`: Output the number only, without the unit specification.
+
+The round argument is used as follows:
+```
+convert.py 5 yards to meters round 2
+```
+
+The unitless argument is used as follows:
+```
+convert.py 20 pints to liters unitless
+```
+
+They can be used together in whichever order you prefer
+```
+convert.py 303 seconds to minutes round 0 unitless
+convert.py 50ft to m unitless round 3
+```
+
+You can also call `convert.py` with no arguments use the `help` argument to re-read all of this information:
+```
+convert.py
+convert.py help
+```
+
+## Current units supported
 
 In alphabetical order:
 
@@ -175,3 +219,9 @@ Within the scope of conversions, I plan to add the following:
 I will also add an option to omit the unit from the output, which will make piping output from this tool much easier.
 
 Finally, I am also considering expanding the scope to other simple and common conversions/calculations, like the surface area or volume, speed, and diagonal lines/angles.
+
+## Acknowledgements
+
+ASCII convert.py made on https://patorjk.com/software/taag/ using the ANSI Compact font.
+
+No AI was used to generate/check/whatever code in this project (because screw AI).

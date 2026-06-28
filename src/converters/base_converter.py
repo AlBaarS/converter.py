@@ -12,7 +12,7 @@ class BaseConverter:
 
     type: str = "Base class"
 
-    # Printing methods
+    # Getter methods
     def __str__(self) -> str:   # pragma: no cover
         return str(self.type + "\n" + str(self.conversion_multipliers) + "\n" + str(self.units))
     

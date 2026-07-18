@@ -1,16 +1,16 @@
 class BaseConverter:
 
     conversion_multipliers: dict[str, float] = {
-        "base":   1,
+        "base": 1,
         "half": 2
     }
 
     units: dict[str, list[str]] = {
-        "base":   ["b","bs","base"],
+        "base": ["b","bs","base"],
         "half": ["h","hf","half"]
     }
 
-    type: str = "Base class"
+    type: str = "base"
 
     # Getter methods
     def __str__(self) -> str:   # pragma: no cover

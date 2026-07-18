@@ -108,6 +108,17 @@ Available units for distance:
 - Lightyear (ly)
 '''
 
+    help_temperature: str = '''
+     ▄▄▄▄  ▄▄▄  ▄▄  ▄▄ ▄▄ ▄▄ ▄▄▄▄▄ ▄▄▄▄  ▄▄▄▄▄▄   ▄▄▄▄  ▄▄ ▄▄ 
+    ██▀▀▀ ██▀██ ███▄██ ██▄██ ██▄▄  ██▄█▄   ██     ██▄█▀ ▀███▀ 
+    ▀████ ▀███▀ ██ ▀██  ▀█▀  ██▄▄▄ ██ ██   ██   ▄ ██      █  
+
+Available units for temperature:
+- Celsius (°C)
+- Fahrenheit (°F)
+- Kelvin (K)
+'''
+
     help_time: str = '''
      ▄▄▄▄  ▄▄▄  ▄▄  ▄▄ ▄▄ ▄▄ ▄▄▄▄▄ ▄▄▄▄  ▄▄▄▄▄▄   ▄▄▄▄  ▄▄ ▄▄ 
     ██▀▀▀ ██▀██ ███▄██ ██▄██ ██▄▄  ██▄█▄   ██     ██▄█▀ ▀███▀ 
@@ -171,25 +182,28 @@ Available units for weight:
         self.input_command = command
 
     # Getter methods
-    def get_input_command(self) -> str: # pragma: no cover
+    def get_input_command(self) -> str:    # pragma: no cover
         return self.input_command
 
-    def get_help_page(self) -> str:     # pragma: no cover
+    def get_help_page(self) -> str:        # pragma: no cover
         return self.help_page
     
-    def get_help_area(self) -> str:     # pragma: no cover
+    def get_help_area(self) -> str:        # pragma: no cover
         return self.help_area
     
-    def get_help_distance(self) -> str: # pragma: no cover
+    def get_help_distance(self) -> str:    # pragma: no cover
         return self.help_distance
     
-    def get_help_time(self) -> str:     # pragma: no cover
+    def get_help_temperature(self) -> str: # pragma: no cover
+        return self.help_temperature
+    
+    def get_help_time(self) -> str:        # pragma: no cover
         return self.help_time
     
-    def get_help_volume(self) -> str:   # pragma: no cover
+    def get_help_volume(self) -> str:      # pragma: no cover
         return self.help_volume
     
-    def get_help_weight(self) -> str:   # pragma: no cover
+    def get_help_weight(self) -> str:      # pragma: no cover
         return self.help_weight
     
     # Functional methods
@@ -199,6 +213,8 @@ Available units for weight:
                 return self.get_help_area()
             case "distance":
                 return self.get_help_distance()
+            case "temperature":
+                return self.get_help_temperature()
             case "time":
                 return self.get_help_time()
             case "volume":

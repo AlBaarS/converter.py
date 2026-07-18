@@ -106,7 +106,7 @@ convert.py 303 seconds to minutes round 0 unitless
 convert.py 50ft to m unitless round 3
 ```
 
-You can also call `convert.py` with no arguments use the `help` argument to re-read all of this information:
+You can also call `convert.py` with no arguments to use the `help` argument to re-read all of this information:
 ```
 convert.py
 convert.py help
@@ -154,6 +154,15 @@ In alphabetical order:
 - Mile (mi)
 - Nautical mile (nmi)
 - Lightyear (ly)
+</details>
+
+<details>
+<summary>Temperature</summary>
+<br>
+
+- Celsius (°C)
+- Fahrenheit (°F)
+- Kelvin (K)
 </details>
 
 <details>
@@ -213,10 +222,7 @@ In alphabetical order:
 
 Within the scope of conversions, I plan to add the following:
 
-- Temperature
 - Velocity
-
-I will also add an option to omit the unit from the output, which will make piping output from this tool much easier.
 
 Finally, I am also considering expanding the scope to other simple and common conversions/calculations, like the surface area or volume, speed, and diagonal lines/angles.
 
